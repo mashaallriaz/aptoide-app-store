@@ -1,11 +1,14 @@
 package com.example.aptoidebymashalriaz.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -52,13 +56,17 @@ import com.example.aptoidebymashalriaz.ui.theme.HeadlineMediumText
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier) {
     val state by viewModel.uiState.collectAsState()
-    HomeScreenImpl(state)
+    HomeScreenImpl(state, onAppClick = {})
 }
 
 @Composable
-private fun HomeScreenImpl(state: HomeViewState) {
-    val bannerApps = state.apps.filter { it.graphic.isNullOrEmpty().not() }.take(5)
-    val apps = state.apps.filter { it.graphic.isNullOrEmpty().not() }.drop(5)
+private fun HomeScreenImpl(
+    state: HomeViewState,
+    onAppClick: (app: App) -> Unit
+) {
+    val allApps = state.apps
+    val bannerApps = allApps.filter { it.graphic.isNullOrEmpty().not() }.take(5)
+    val localTopCarouselApps = allApps.take(5)
 
     LazyColumn {
         item { TopAppBarWithLogo() }
@@ -79,12 +87,20 @@ private fun HomeScreenImpl(state: HomeViewState) {
             )
         }
 
-        item { HomeBannerCarousel(bannerApps = bannerApps) }
+        item { HomeBannerCarousel(bannerApps = bannerApps, onAppClick = onAppClick) }
+
+        item {
+            HeadlineMediumText(
+                text = stringResource(R.string.top_local_app_carousel_header_label),
+                modifier = Modifier.padding(horizontal = AptoideSpacing.spacing16)
+            )
+        }
+        item { LocalTopAppsCarousel(localTopCarouselApps, onAppClick = onAppClick) }
 
         item { AppListHeader() }
 
-        items(apps) { app ->
-            AppListItem(app = app, onDownloadClick = {})
+        items(allApps) { app ->
+            AppListItem(app = app, onAppClick = onAppClick)
         }
 
         item { Spacer(modifier = Modifier.padding(vertical = AptoideSpacing.spacing16)) }
@@ -92,7 +108,7 @@ private fun HomeScreenImpl(state: HomeViewState) {
 }
 
 @Composable
-private fun HomeBannerCarousel(bannerApps: List<App>) {
+private fun HomeBannerCarousel(bannerApps: List<App>, onAppClick: (app: App) -> Unit) {
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { bannerApps.size })
     Column {
         HorizontalPager(
@@ -107,6 +123,7 @@ private fun HomeBannerCarousel(bannerApps: List<App>) {
                     .fillMaxSize()
                     .padding(horizontal = AptoideSpacing.spacing16)
                     .clip(RoundedCornerShape(12.dp))
+                    .clickable { onAppClick(item) }
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -178,6 +195,56 @@ private fun CustomPagerIndicator(
     }
 }
 
+@Composable
+private fun LocalTopAppsCarousel(apps: List<App>, onAppClick: (app: App) -> Unit) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = AptoideSpacing.spacing12),
+        contentPadding = PaddingValues(horizontal = AptoideSpacing.spacing16),
+        horizontalArrangement = Arrangement.spacedBy(AptoideSpacing.spacing8),
+    ) {
+        items(apps) { app ->
+            Box(
+                modifier = Modifier
+                    .width(120.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(AptoideColor.LightGrey)
+                    .clickable { onAppClick(app) }
+            ) {
+                Column(modifier = Modifier.padding(AptoideSpacing.spacing8)) {
+                    AsyncImage(
+                        model = app.icon,
+                        contentDescription = app.name,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    BodyMediumText(text = app.name.orEmpty(), maxLines = 2)
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "Rating",
+                            tint = AptoideColor.BackgroundGrey,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        BodySmallText(text = app.rating?.toString() ?: "--")
+                    }
+                }
+            }
+        }
+    }
+}
 
 @Composable
 private fun AppListHeader() {
@@ -202,7 +269,7 @@ private fun AppListHeader() {
 @Composable
 private fun AppListItem(
     app: App,
-    onDownloadClick: () -> Unit
+    onAppClick: (app: App) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -224,7 +291,10 @@ private fun AppListItem(
         Column(modifier = Modifier.weight(1f)) {
             BodyMediumText(text = app.name.orEmpty(), maxLines = 1)
             Spacer(modifier = Modifier.width(AptoideSpacing.spacing2))
-            BodySmallText(text = app.storeName.orEmpty(), color = AptoideColor.SecondaryTextGrey)
+            BodySmallText(
+                text = app.storeName.orEmpty(),
+                color = AptoideColor.SecondaryTextGrey
+            )
 
             app.rating?.takeIf { it > 0 }?.let { rating ->
                 Spacer(modifier = Modifier.height(AptoideSpacing.spacing2))
@@ -243,7 +313,7 @@ private fun AppListItem(
 
         OutlinedSmallButton(
             text = stringResource(R.string.download_button_label),
-            onClick = onDownloadClick
+            onClick = { onAppClick(app) }
         )
     }
 }
