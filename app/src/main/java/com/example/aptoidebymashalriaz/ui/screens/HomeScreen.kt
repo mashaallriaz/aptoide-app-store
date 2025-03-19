@@ -54,7 +54,6 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier) {
 private fun HomeScreenImpl(state: HomeViewState) {
     val bannerApps = state.apps.filter { it.graphic.isNullOrEmpty().not() }.take(5)
     val apps = state.apps.filter { it.graphic.isNullOrEmpty().not() }.drop(5)
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { bannerApps.size })
 
     Column {
         TopAppBarWithLogo()
@@ -71,68 +70,72 @@ private fun HomeScreenImpl(state: HomeViewState) {
             text = stringResource(R.string.home_header_label)
         )
 
-        HomeBannerCarousel(bannerApps = bannerApps, pagerState = pagerState)
-        CustomPagerIndicator(
-            pagerState = pagerState,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+        HomeBannerCarousel(bannerApps = bannerApps)
     }
 }
 
 @Composable
-fun HomeBannerCarousel(bannerApps: List<App>, pagerState: PagerState) {
-    HorizontalPager(
-        state = pagerState,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp),
-    ) { page ->
-        val item = bannerApps[page]
-        Box(
+fun HomeBannerCarousel(bannerApps: List<App>) {
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { bannerApps.size })
+    Column() {
+        HorizontalPager(
+            state = pagerState,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = AptoideSpacing.spacing16)
-                .clip(RoundedCornerShape(12.dp))
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(item.graphic)
-                    .crossfade(true)
-                    .placeholder(R.drawable.ic_image_placeholder)
-                    .error(R.drawable.ic_image_placeholder)
-                    .build(),
-                contentDescription = null,
+                .fillMaxWidth()
+                .height(200.dp),
+        ) { page ->
+            val item = bannerApps[page]
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(AptoideColor.LightGrey),
-                contentScale = ContentScale.Crop,
-            )
-
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(16.dp)
+                    .padding(horizontal = AptoideSpacing.spacing16)
+                    .clip(RoundedCornerShape(12.dp))
             ) {
-                BodyMediumText(
-                    text = item.name ?: "",
-                    color = AptoideColor.White
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(item.graphic)
+                        .crossfade(true)
+                        .placeholder(R.drawable.ic_image_placeholder)
+                        .error(R.drawable.ic_image_placeholder)
+                        .build(),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(AptoideColor.LightGrey),
+                    contentScale = ContentScale.Crop,
                 )
 
-                item.rating?.takeIf { it > 0 }?.let { rating ->
-                    Spacer(modifier = Modifier.padding(AptoideSpacing.spacing2))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = "Rating star",
-                            tint = Color.Yellow,
-                            modifier = Modifier.size(12.dp)
-                        )
-                        Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
-                        BodySmallText(text = rating.toString(), color = AptoideColor.White)
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(16.dp)
+                ) {
+                    BodyMediumText(
+                        text = item.name ?: "",
+                        color = AptoideColor.White
+                    )
+
+                    item.rating?.takeIf { it > 0 }?.let { rating ->
+                        Spacer(modifier = Modifier.padding(AptoideSpacing.spacing2))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = "Rating star",
+                                tint = Color.Yellow,
+                                modifier = Modifier.size(12.dp)
+                            )
+                            Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
+                            BodySmallText(text = rating.toString(), color = AptoideColor.White)
+                        }
                     }
                 }
             }
         }
+
+        CustomPagerIndicator(
+            pagerState = pagerState,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
     }
 }
 
