@@ -15,11 +15,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -55,7 +59,7 @@ private fun HomeScreenImpl(state: HomeViewState) {
     val bannerApps = state.apps.filter { it.graphic.isNullOrEmpty().not() }.take(5)
     val apps = state.apps.filter { it.graphic.isNullOrEmpty().not() }.drop(5)
 
-    Column {
+    Column(Modifier.verticalScroll(rememberScrollState())) {
         TopAppBarWithLogo()
 
         if (state.loading) {
@@ -71,13 +75,19 @@ private fun HomeScreenImpl(state: HomeViewState) {
         )
 
         HomeBannerCarousel(bannerApps = bannerApps)
+
+        apps.forEach { item ->
+            AppListItem(item, onDownloadClick = {})
+        }
+
+        Spacer(modifier = Modifier.padding(vertical = AptoideSpacing.spacing16))
     }
 }
 
 @Composable
-fun HomeBannerCarousel(bannerApps: List<App>) {
+private fun HomeBannerCarousel(bannerApps: List<App>) {
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { bannerApps.size })
-    Column() {
+    Column {
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
@@ -108,7 +118,7 @@ fun HomeBannerCarousel(bannerApps: List<App>) {
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(16.dp)
+                        .padding(AptoideSpacing.spacing16)
                 ) {
                     BodyMediumText(
                         text = item.name ?: "",
@@ -140,7 +150,7 @@ fun HomeBannerCarousel(bannerApps: List<App>) {
 }
 
 @Composable
-fun CustomPagerIndicator(
+private fun CustomPagerIndicator(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
 ) {
@@ -156,6 +166,59 @@ fun CustomPagerIndicator(
                     .size(8.dp)
                     .clip(CircleShape)
                     .background(color)
+            )
+        }
+    }
+}
+
+@Composable
+fun AppListItem(
+    app: App,
+    onDownloadClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = AptoideSpacing.spacing8, horizontal = AptoideSpacing.spacing16),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AsyncImage(
+            model = app.icon,
+            contentDescription = "${app.name} icon",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(64.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(AptoideColor.LightGrey)
+        )
+
+        Spacer(modifier = Modifier.width(AptoideSpacing.spacing12))
+
+        Column(modifier = Modifier.weight(1f)) {
+            BodyMediumText(text = app.name.orEmpty())
+            Spacer(modifier = Modifier.width(AptoideSpacing.spacing2))
+            BodySmallText(text = app.storeName.orEmpty(), color = AptoideColor.SecondaryTextGrey)
+
+            app.rating?.takeIf { it > 0 }?.let { rating ->
+                Spacer(modifier = Modifier.height(AptoideSpacing.spacing4))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Rating",
+                        tint = AptoideColor.BackgroundGrey,
+                        modifier = Modifier.size(14.dp)
+                    )
+                    Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
+                    BodySmallText(text = rating.toString())
+                }
+            }
+        }
+
+        IconButton(onClick = onDownloadClick) {
+            Icon(
+                imageVector = Icons.Default.AccountBox,
+                contentDescription = "Download",
+                tint = AptoideColor.AptoidePrimary
             )
         }
     }
