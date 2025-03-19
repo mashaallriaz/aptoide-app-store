@@ -1,7 +1,7 @@
 package com.example.aptoidebymashalriaz.domain.interactors
 
-import com.example.aptoidebymashalriaz.data.remote.AptoideRepository
 import com.example.aptoidebymashalriaz.domain.models.App
+import com.example.aptoidebymashalriaz.domain.repositories.AptoideRepository
 import javax.inject.Inject
 
 class GetAllApps @Inject constructor(private val repository: AptoideRepository) :

@@ -4,6 +4,24 @@ import com.example.aptoidebymashalriaz.domain.models.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
+/**
+ * A reusable resource interactor that handles the common pattern of:
+ *   • emitting cached data immediately (if any),
+ *   • fetching fresh data (example: from network),
+ *   • saving that fresh data locally,
+ *   • then emitting the up‑to‑date data,
+ *   • and finally reporting errors if the fetch fails.
+ *
+ * This class returns a Flow<Result<T>> with three possible states:
+ *   • Loading — emits any cached data while the remote fetch is in progress
+ *   • Success — emits the newly fetched (or reloaded cached) data on success
+ *   • Error   — emits an error message if the fetch fails (cached data remains available)
+ *
+ * To use it:
+ *   • Subclass and implement doWork(params) to perform the remote/data fetch.
+ *   • Override getCachedData(params) if you want to return locally cached data (default = null).
+ *   • Override saveData(params, data) to persist the fetched result (default = no‑op).
+ */
 abstract class FlowResourceInteractor<in P, T> {
     operator fun invoke(params: P): Flow<Result<T>> = flow {
         val cachedData = getCachedData(params)

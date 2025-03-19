@@ -7,8 +7,9 @@ import com.example.aptoidebymashalriaz.data.remote.AptoideRemoteDataSource
 import com.example.aptoidebymashalriaz.data.local.AptoideDao
 import com.example.aptoidebymashalriaz.data.local.AptoideDatabase
 import com.example.aptoidebymashalriaz.data.local.AptoideLocalDataSource
-import com.example.aptoidebymashalriaz.data.remote.AptoideRepository
+import com.example.aptoidebymashalriaz.data.remote.AptoideRepositoryImpl
 import com.example.aptoidebymashalriaz.data.remote.AptoideService
+import com.example.aptoidebymashalriaz.domain.repositories.AptoideRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -70,7 +71,7 @@ object Dependencies {
         remoteDataSource: AptoideRemoteDataSource,
         localDataSource: AptoideLocalDataSource
     ): AptoideRepository {
-        return AptoideRepository(remoteDataSource, localDataSource)
+        return AptoideRepositoryImpl(remoteDataSource, localDataSource)
     }
 
     @Provides
