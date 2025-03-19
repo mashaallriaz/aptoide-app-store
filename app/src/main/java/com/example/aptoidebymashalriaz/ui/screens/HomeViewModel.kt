@@ -22,19 +22,19 @@ class HomeViewModel @Inject constructor(private val getAllApps: GetAllApps) : Vi
                 when (result) {
                     is Result.Loading -> {
                         _state.update {
-                            it.copy(text = "Loading")
+                            it.copy(loading = true, apps = result.data ?: emptyList())
                         }
                     }
 
                     is Result.Success -> {
                         _state.update {
-                            it.copy(text = result.data.toString())
+                            it.copy(loading = false, apps = result.data)
                         }
                     }
 
                     is Result.Error -> {
                         _state.update {
-                            it.copy(text = "Error")
+                            it.copy(loading = false)
                         }
                     }
                 }
