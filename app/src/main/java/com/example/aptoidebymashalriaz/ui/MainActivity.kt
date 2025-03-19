@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.aptoidebymashalriaz.ui.screens.HomeScreen
-import com.example.aptoidebymashalriaz.ui.theme.AptoideByMashalRiazTheme
+import com.example.aptoidebymashalriaz.ui.theme.AptoideTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AptoideByMashalRiazTheme {
+            AptoideTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     HomeScreen(modifier = Modifier.padding(innerPadding))
                 }
