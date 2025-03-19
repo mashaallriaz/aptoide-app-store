@@ -15,7 +15,8 @@ internal fun BaseText(
     text: String,
     style: TextStyle,
     textAlign: TextAlign = TextAlign.Unspecified,
-    color: Color = Color.Unspecified
+    color: Color = Color.Unspecified,
+    maxLines: Int = Int.MAX_VALUE
 ) {
     BasicText(
         text = text,
@@ -24,7 +25,8 @@ internal fun BaseText(
             color = color.takeOrElse { style.color }
         ),
         modifier = modifier,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
+        maxLines = maxLines
     )
 }
 
@@ -57,16 +59,32 @@ fun HeadlineMediumText(
 }
 
 @Composable
-fun BodyMediumText(
+fun HeadlineSmallText(
     modifier: Modifier = Modifier,
     text: String,
     color: Color = Color.Unspecified,
 ) {
     BaseText(
         text = text,
-        style = Typography.bodyMedium,
+        style = Typography.headlineSmall,
         modifier = modifier,
         color = color
+    )
+}
+
+@Composable
+fun BodyMediumText(
+    modifier: Modifier = Modifier,
+    text: String,
+    color: Color = Color.Unspecified,
+    maxLines: Int = Int.MAX_VALUE,
+) {
+    BaseText(
+        text = text,
+        style = Typography.bodyMedium,
+        modifier = modifier,
+        color = color,
+        maxLines = maxLines
     )
 }
 

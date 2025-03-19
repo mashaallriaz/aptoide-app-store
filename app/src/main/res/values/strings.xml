@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Aptoide by Mashal Riaz</string>
     <string name="home_header_label">Find the best mobile games and apps in Aptoide, your favorite app store!</string>
+    <string name="app_list_header_label">Apps</string>
+    <string name="download_button_label">DOWNLOAD</string>
 </resources>
