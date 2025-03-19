@@ -283,9 +283,8 @@ private fun AppListItem(
             contentDescription = "${app.name} icon",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(64.dp)
+                .size(56.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(AptoideColor.LightGrey)
         )
 
         Column(modifier = Modifier.weight(1f)) {
