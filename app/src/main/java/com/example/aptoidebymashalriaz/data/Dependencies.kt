@@ -1,17 +1,24 @@
 package com.example.aptoidebymashalriaz.data
 
+import android.content.Context
+import androidx.room.Room
 import com.example.aptoidebymashalriaz.BuildConfig
-import com.example.aptoidebymashalriaz.data.aptoide.AptoideRemoteDataSource
-import com.example.aptoidebymashalriaz.data.aptoide.AptoideRepository
-import com.example.aptoidebymashalriaz.data.aptoide.AptoideService
+import com.example.aptoidebymashalriaz.data.remote.AptoideRemoteDataSource
+import com.example.aptoidebymashalriaz.data.local.AptoideDao
+import com.example.aptoidebymashalriaz.data.local.AptoideDatabase
+import com.example.aptoidebymashalriaz.data.local.AptoideLocalDataSource
+import com.example.aptoidebymashalriaz.data.remote.AptoideRepository
+import com.example.aptoidebymashalriaz.data.remote.AptoideService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -43,13 +50,27 @@ object Dependencies {
     fun provideBaseUrl(): String = BuildConfig.BASE_URL
 
     @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext appContext: Context): AptoideDatabase {
+        return Room.databaseBuilder(appContext, AptoideDatabase::class.java, "aptoide_database")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    fun provideAppDao(database: AptoideDatabase): AptoideDao = database.aptoideDao()
+
+    @Provides
     fun provideAptoideService(retrofit: Retrofit): AptoideService {
         return retrofit.create(AptoideService::class.java)
     }
 
     @Provides
-    fun provideAptoideRepository(remoteDataSource: AptoideRemoteDataSource): AptoideRepository {
-        return AptoideRepository(remoteDataSource)
+    fun provideAptoideRepository(
+        remoteDataSource: AptoideRemoteDataSource,
+        localDataSource: AptoideLocalDataSource
+    ): AptoideRepository {
+        return AptoideRepository(remoteDataSource, localDataSource)
     }
 
     @Provides

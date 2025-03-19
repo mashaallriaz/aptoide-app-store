@@ -1,6 +1,5 @@
-package com.example.aptoidebymashalriaz.data.aptoide
+package com.example.aptoidebymashalriaz.data.remote
 
-import com.example.aptoidebymashalriaz.data.ApiResponse
 import retrofit2.http.GET
 
 interface AptoideService {

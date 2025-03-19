@@ -1,6 +1,5 @@
-package com.example.aptoidebymashalriaz.data.aptoide
+package com.example.aptoidebymashalriaz.data.remote
 
-import com.example.aptoidebymashalriaz.data.ApiResponse
 import javax.inject.Inject
 
 class AptoideRemoteDataSource @Inject constructor(private val service: AptoideService) {

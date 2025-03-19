@@ -1,4 +1,4 @@
-package com.example.aptoidebymashalriaz.data
+package com.example.aptoidebymashalriaz.data.remote
 
 data class ApiResponse<T>(
     val status: String,

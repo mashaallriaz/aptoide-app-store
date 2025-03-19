@@ -1,47 +1,46 @@
-package com.example.aptoidebymashalriaz.data.aptoide
+package com.example.aptoidebymashalriaz.data.remote
 
 import com.google.gson.annotations.SerializedName
-import java.math.BigInteger
 
 data class GetAllAppsResponse(
     @SerializedName("listApps")
-    val appsList: AppsList?
+    val appsList: AppsListResponse?
 )
 
-data class AppsList(
+data class AppsListResponse(
     @SerializedName("info")
-    val info: Info?,
+    val info: InfoResponse?,
     @SerializedName("datasets")
-    val datasets: Datasets?
+    val datasets: DatasetsResponse?
 )
 
-data class Info(
+data class InfoResponse(
     @SerializedName("status")
     val status: String?,
     @SerializedName("time")
-    val time: Time?
+    val time: TimeResponse?
 )
 
-data class Datasets(
+data class DatasetsResponse(
     @SerializedName("all")
-    val all: All?
+    val all: AllResponse?
 )
 
-data class Time(
+data class TimeResponse(
     @SerializedName("seconds")
     val seconds: Double?,
     @SerializedName("human")
     val human: String?
 )
 
-data class All(
+data class AllResponse(
     @SerializedName("info")
-    val info: Info?,
+    val info: InfoResponse?,
     @SerializedName("data")
-    val data: Data?
+    val data: DataResponse?
 )
 
-data class Data(
+data class DataResponse(
     @SerializedName("total")
     val total: Int?,
     @SerializedName("offset")
@@ -53,16 +52,16 @@ data class Data(
     @SerializedName("hidden")
     val hidden: Int?,
     @SerializedName("list")
-    val list: List<App?>?
+    val list: List<AppResponse?>?
 )
 
-data class App(
+data class AppResponse(
     @SerializedName("id")
-    val id: Int?,
+    val id: Long,
     @SerializedName("name")
     val name: String?,
     @SerializedName("package")
-    val packageX: String?,
+    val packageName: String?,
     @SerializedName("store_id")
     val storeId: Int?,
     @SerializedName("store_name")
@@ -76,7 +75,7 @@ data class App(
     @SerializedName("apk_tags")
     val apkTags: List<Any?>?,
     @SerializedName("size")
-    val size: BigInteger?,
+    val size: Long?,
     @SerializedName("downloads")
     val downloads: Int?,
     @SerializedName("pdownloads")
