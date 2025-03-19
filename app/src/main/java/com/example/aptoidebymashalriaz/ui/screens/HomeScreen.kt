@@ -12,13 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Star
@@ -59,28 +59,32 @@ private fun HomeScreenImpl(state: HomeViewState) {
     val bannerApps = state.apps.filter { it.graphic.isNullOrEmpty().not() }.take(5)
     val apps = state.apps.filter { it.graphic.isNullOrEmpty().not() }.drop(5)
 
-    Column(Modifier.verticalScroll(rememberScrollState())) {
-        TopAppBarWithLogo()
+    LazyColumn {
+        item { TopAppBarWithLogo() }
 
-        if (state.loading) {
-            LinearProgressIndicator(
-                modifier = Modifier.fillMaxWidth(),
-                color = AptoideColor.AptoidePrimary
+        item {
+            if (state.loading) {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = AptoideColor.AptoidePrimary
+                )
+            }
+        }
+
+        item {
+            HeadlineLargeText(
+                modifier = Modifier.padding(AptoideSpacing.spacing16),
+                text = stringResource(R.string.home_header_label)
             )
         }
 
-        HeadlineLargeText(
-            modifier = Modifier.padding(AptoideSpacing.spacing16),
-            text = stringResource(R.string.home_header_label)
-        )
+        item { HomeBannerCarousel(bannerApps = bannerApps) }
 
-        HomeBannerCarousel(bannerApps = bannerApps)
-
-        apps.forEach { item ->
-            AppListItem(item, onDownloadClick = {})
+        items(apps) { app ->
+            AppListItem(app = app, onDownloadClick = {})
         }
 
-        Spacer(modifier = Modifier.padding(vertical = AptoideSpacing.spacing16))
+        item { Spacer(modifier = Modifier.padding(vertical = AptoideSpacing.spacing16)) }
     }
 }
 
