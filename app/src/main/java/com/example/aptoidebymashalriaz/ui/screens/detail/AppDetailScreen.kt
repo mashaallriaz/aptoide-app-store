@@ -102,7 +102,9 @@ private fun AppDetailsHeader(app: App?) {
             model = app?.icon,
             contentDescription = "${app?.name} icon",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.size(100.dp)
+            modifier = Modifier
+                .size(100.dp)
+                .clip(RoundedCornerShape(12.dp))
         )
 
         Spacer(modifier = Modifier.height(AptoideSpacing.spacing12))
