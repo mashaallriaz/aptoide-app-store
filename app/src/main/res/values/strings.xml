@@ -8,4 +8,8 @@
     <string name="app_detail_latest_version_label">Latest version</string>
     <string name="app_detail_description_heading">Description</string>
     <string name="app_detail_description_body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae neque et nisl hendrerit gravida. Nunc sagittis, eros et congue efficitur, lacus justo sagittis dolor, id commodo turpis enim id lorem. Nullam vitae felis ut mauris lobortis condimentum. Aliquam et ligula sed felis tempor finibus id eu enim. Cras massa ligula, maximus aliquet vehicula molestie, vehicula et quam. Nunc sed dolor ut nunc mollis varius. Fusce vitae mi lacus. Sed pharetra eu sem et interdum. Nam in lorem vitae libero facilisis ultrices. Maecenas euismod commodo vestibulum. Sed tempor sem non enim ullamcorper fermentum. Proin euismod libero vel fermentum pulvinar. Praesent dictum gravida lorem, quis sollicitudin urna lobortis eget.</string>
+
+    <string name="download_unavailable_alert_title">Download Unavailable</string>
+    <string name="download_unavailable_alert_message">The app is not available for download in demo mode.</string>
+    <string name="download_unavailable_alert_button_label">Dismiss</string>
 </resources>

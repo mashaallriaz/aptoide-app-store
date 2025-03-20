@@ -11,12 +11,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,9 +34,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.aptoidebymashalriaz.R
 import com.example.aptoidebymashalriaz.domain.models.App
+import com.example.aptoidebymashalriaz.ui.components.PrimaryButton
 import com.example.aptoidebymashalriaz.ui.components.TopBarWithLogoAndNavigationIcon
 import com.example.aptoidebymashalriaz.ui.theme.AptoideColor
 import com.example.aptoidebymashalriaz.ui.theme.AptoideSpacing
@@ -47,6 +56,9 @@ fun AppDetailScreen(viewModel: AppDetailViewModel = hiltViewModel()) {
 
 @Composable
 private fun AppDetailScreenImpl(uiState: AppDetailViewState) {
+    var showDownloadDialog by remember { mutableStateOf(false) }
+    val navController = rememberNavController()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,9 +67,25 @@ private fun AppDetailScreenImpl(uiState: AppDetailViewState) {
                 contentScale = ContentScale.Crop
             )
     ) {
-        TopBarWithLogoAndNavigationIcon(onClick = {})
+        if (showDownloadDialog) {
+            AlertDialog(
+                onDismissRequest = { showDownloadDialog = false },
+                title = { HeadlineLargeText(text = stringResource(R.string.download_unavailable_alert_title)) },
+                text = { BodyMediumText(text = stringResource(R.string.download_unavailable_alert_message)) },
+                confirmButton = {
+                    TextButton(onClick = { showDownloadDialog = false }) {
+                        HeadlineMediumText(text = stringResource(R.string.download_unavailable_alert_button_label))
+                    }
+                }
+            )
+        }
+
+        TopBarWithLogoAndNavigationIcon(onClick = { navController.popBackStack() })
         AppDetailsHeader(app = uiState.app)
-        AppDetailsBody(app = uiState.app, modifier = Modifier.weight(1f))
+        AppDetailsBody(
+            modifier = Modifier.weight(1f),
+            app = uiState.app,
+            onDownloadClick = { showDownloadDialog = true })
     }
 }
 
@@ -90,7 +118,7 @@ private fun AppDetailsHeader(app: App?) {
 }
 
 @Composable
-fun AppDetailsBody(app: App?, modifier: Modifier) {
+fun AppDetailsBody(modifier: Modifier, app: App?, onDownloadClick: () -> Unit) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -98,20 +126,28 @@ fun AppDetailsBody(app: App?, modifier: Modifier) {
             .background(AptoideColor.White)
             .padding(AptoideSpacing.spacing16),
     ) {
-        Spacer(modifier = Modifier.height(AptoideSpacing.spacing16))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState())
         ) {
-            AppStatsRow(iconRes = R.drawable.ic_download, text = app?.downloads.toString())
-            Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
-            AppStatsRow(iconRes = R.drawable.ic_app_size, text = app?.size.toString())
-            Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
-            AppStatsRow(iconRes = R.drawable.ic_star, text = app?.rating.toString())
+            Spacer(modifier = Modifier.height(AptoideSpacing.spacing16))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AppStatsRow(iconRes = R.drawable.ic_download, text = app?.downloads.toString())
+                Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
+                AppStatsRow(iconRes = R.drawable.ic_app_size, text = app?.size.toString())
+                Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
+                AppStatsRow(iconRes = R.drawable.ic_star, text = app?.rating.toString())
+            }
+            LatestVersionSection(version = app?.verCode.toString())
+            DescriptionSection(modifier = Modifier.fillMaxWidth())
         }
-        LatestVersionSection(version = app?.verCode.toString())
-        DescriptionSection()
+
+        DownloadButton(onDownloadClick = onDownloadClick)
     }
 }
 
@@ -151,14 +187,25 @@ private fun LatestVersionSection(version: String) {
 }
 
 @Composable
-private fun DescriptionSection() {
+private fun DescriptionSection(modifier: Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = AptoideSpacing.spacing16),
+            .padding(vertical = AptoideSpacing.spacing8),
     ) {
         HeadlineMediumText(text = stringResource(R.string.app_detail_description_heading))
         Spacer(modifier = Modifier.height(AptoideSpacing.spacing8))
         BodyMediumText(text = stringResource(R.string.app_detail_description_body))
     }
+}
+
+@Composable
+private fun DownloadButton(onDownloadClick: () -> Unit) {
+    PrimaryButton(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = AptoideSpacing.spacing16),
+        text = stringResource(R.string.download_button_label),
+        onClick = { onDownloadClick() }
+    )
 }
