@@ -7,7 +7,6 @@ import com.example.aptoidebymashalriaz.data.remote.AptoideRemoteDataSource
 import com.example.aptoidebymashalriaz.data.local.AptoideDao
 import com.example.aptoidebymashalriaz.data.local.AptoideDatabase
 import com.example.aptoidebymashalriaz.data.local.AptoideLocalDataSource
-import com.example.aptoidebymashalriaz.data.remote.AptoideRepositoryImpl
 import com.example.aptoidebymashalriaz.data.remote.AptoideService
 import com.example.aptoidebymashalriaz.domain.repositories.AptoideRepository
 import dagger.Module

@@ -6,4 +6,5 @@ interface AptoideRepository {
     suspend fun fetchAllApps(): List<App>
     suspend fun getAllCachedApps(): List<App>
     suspend fun saveApps(apps: List<App>)
+    suspend fun getAppById(id: Long): App?
 }

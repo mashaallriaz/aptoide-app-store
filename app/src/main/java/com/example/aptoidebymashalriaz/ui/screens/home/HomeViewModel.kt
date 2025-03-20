@@ -1,4 +1,4 @@
-package com.example.aptoidebymashalriaz.ui.screens
+package com.example.aptoidebymashalriaz.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

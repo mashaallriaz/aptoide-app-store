@@ -10,4 +10,8 @@ class AptoideLocalDataSource @Inject constructor(private val aptoideDao: Aptoide
     suspend fun getApps(): List<AppEntity> {
         return aptoideDao.getAllApps()
     }
+
+    suspend fun getAppById(id: Long): AppEntity? {
+        return aptoideDao.getAppById(id)
+    }
 }

@@ -12,4 +12,7 @@ interface AptoideDao {
 
     @Query("SELECT * FROM apps")
     suspend fun getAllApps(): List<AppEntity>
+
+    @Query("SELECT * FROM apps WHERE id = :id")
+    suspend fun getAppById(id: Long): AppEntity?
 }

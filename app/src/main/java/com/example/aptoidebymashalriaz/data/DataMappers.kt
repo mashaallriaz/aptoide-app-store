@@ -5,7 +5,7 @@ import com.example.aptoidebymashalriaz.data.remote.AppResponse
 import com.example.aptoidebymashalriaz.domain.models.App
 
 object DataMappers {
-    private fun AppEntity.toApp(): App {
+    fun AppEntity.toApp(): App {
         return App(
             id = this.id,
             name = this.name,

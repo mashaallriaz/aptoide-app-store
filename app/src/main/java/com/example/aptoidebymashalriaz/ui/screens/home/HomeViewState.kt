@@ -1,4 +1,4 @@
-package com.example.aptoidebymashalriaz.ui.screens
+package com.example.aptoidebymashalriaz.ui.screens.home
 
 import com.example.aptoidebymashalriaz.domain.models.App
 

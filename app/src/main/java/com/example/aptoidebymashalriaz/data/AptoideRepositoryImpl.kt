@@ -1,9 +1,11 @@
-package com.example.aptoidebymashalriaz.data.remote
+package com.example.aptoidebymashalriaz.data
 
+import com.example.aptoidebymashalriaz.data.DataMappers.toApp
 import com.example.aptoidebymashalriaz.data.DataMappers.toAppListFromEntity
 import com.example.aptoidebymashalriaz.data.DataMappers.toAppListFromResponse
 import com.example.aptoidebymashalriaz.data.DataMappers.toEntityList
 import com.example.aptoidebymashalriaz.data.local.AptoideLocalDataSource
+import com.example.aptoidebymashalriaz.data.remote.AptoideRemoteDataSource
 import com.example.aptoidebymashalriaz.domain.models.App
 import com.example.aptoidebymashalriaz.domain.repositories.AptoideRepository
 import javax.inject.Inject
@@ -23,5 +25,9 @@ class AptoideRepositoryImpl @Inject constructor(
 
     override suspend fun saveApps(apps: List<App>) {
         localDataSource.saveApps(apps.toEntityList())
+    }
+
+    override suspend fun getAppById(id: Long): App? {
+        return localDataSource.getAppById(id)?.toApp()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.aptoidebymashalriaz.ui.screens
+package com.example.aptoidebymashalriaz.ui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -56,7 +56,9 @@ import com.example.aptoidebymashalriaz.ui.theme.HeadlineMediumText
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier) {
     val state by viewModel.uiState.collectAsState()
-    HomeScreenImpl(state, onAppClick = {})
+    HomeScreenImpl(state, onAppClick = {
+
+    })
 }
 
 @Composable
