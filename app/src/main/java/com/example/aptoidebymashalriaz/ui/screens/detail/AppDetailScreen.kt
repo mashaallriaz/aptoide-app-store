@@ -34,6 +34,7 @@ import com.example.aptoidebymashalriaz.ui.components.TopBarWithLogoAndNavigation
 import com.example.aptoidebymashalriaz.ui.theme.AptoideColor
 import com.example.aptoidebymashalriaz.ui.theme.AptoideSpacing
 import com.example.aptoidebymashalriaz.ui.theme.BodyMediumText
+import com.example.aptoidebymashalriaz.ui.theme.BodySmallText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineLargeText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineMediumText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineSmallText
@@ -121,10 +122,10 @@ private fun AppStatsRow(iconRes: Int, text: String) {
             painter = painterResource(iconRes),
             contentDescription = null,
             tint = AptoideColor.SecondaryTextGrey,
-            modifier = Modifier.size(12.dp)
+            modifier = Modifier.size(10.dp)
         )
-        Spacer(modifier = Modifier.width(AptoideSpacing.spacing8))
-        BodyMediumText(text = text, color = AptoideColor.SecondaryTextGrey)
+        Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
+        BodySmallText(text = text, color = AptoideColor.SecondaryTextGrey)
     }
 }
 
