@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.coil.compose)
+    implementation(libs.navigation.compose)
 
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.android)

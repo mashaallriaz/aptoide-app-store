@@ -54,11 +54,9 @@ import com.example.aptoidebymashalriaz.ui.theme.HeadlineLargeText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineMediumText
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier) {
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), onAppClick: (app: App) -> Unit) {
     val state by viewModel.uiState.collectAsState()
-    HomeScreenImpl(state, onAppClick = {
-
-    })
+    HomeScreenImpl(state = state, onAppClick = onAppClick)
 }
 
 @Composable

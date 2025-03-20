@@ -34,7 +34,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.aptoidebymashalriaz.R
 import com.example.aptoidebymashalriaz.domain.models.App
@@ -49,15 +48,14 @@ import com.example.aptoidebymashalriaz.ui.theme.HeadlineMediumText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineSmallText
 
 @Composable
-fun AppDetailScreen(viewModel: AppDetailViewModel = hiltViewModel()) {
+fun AppDetailScreen(viewModel: AppDetailViewModel = hiltViewModel(), onBackClick: () -> Unit) {
     val state by viewModel.uiState.collectAsState()
-    AppDetailScreenImpl(uiState = state)
+    AppDetailScreenImpl(uiState = state, onBackClick)
 }
 
 @Composable
-private fun AppDetailScreenImpl(uiState: AppDetailViewState) {
+private fun AppDetailScreenImpl(uiState: AppDetailViewState, onBackClick: () -> Unit) {
     var showDownloadDialog by remember { mutableStateOf(false) }
-    val navController = rememberNavController()
 
     Column(
         modifier = Modifier
@@ -80,7 +78,7 @@ private fun AppDetailScreenImpl(uiState: AppDetailViewState) {
             )
         }
 
-        TopBarWithLogoAndNavigationIcon(onClick = { navController.popBackStack() })
+        TopBarWithLogoAndNavigationIcon(onClick = onBackClick)
         AppDetailsHeader(app = uiState.app)
         AppDetailsBody(
             modifier = Modifier.weight(1f),
