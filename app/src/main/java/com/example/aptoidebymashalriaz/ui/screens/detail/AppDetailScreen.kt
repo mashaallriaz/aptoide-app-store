@@ -130,11 +130,14 @@ fun AppDetailsBody(modifier: Modifier, app: App?, onDownloadClick: () -> Unit) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                AppStatsRow(iconRes = R.drawable.ic_download, text = app?.downloads.toString())
+                AppStatsRow(
+                    iconRes = R.drawable.ic_download,
+                    text = app?.formattedDownloads.toString()
+                )
                 Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
-                AppStatsRow(iconRes = R.drawable.ic_app_size, text = app?.size.toString())
+                AppStatsRow(iconRes = R.drawable.ic_app_size, text = app?.formattedSize.toString())
                 Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
-                AppStatsRow(iconRes = R.drawable.ic_star, text = app?.rating.toString())
+                AppStatsRow(iconRes = R.drawable.ic_star, text = app?.formattedRating.toString())
             }
             LatestVersionSection(version = app?.verCode.toString())
             DescriptionSection(modifier = Modifier.fillMaxWidth())

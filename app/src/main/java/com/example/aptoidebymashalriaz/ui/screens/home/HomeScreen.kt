@@ -149,18 +149,16 @@ private fun HomeBannerCarousel(bannerApps: List<App>, onAppClick: (app: App) -> 
                         color = AptoideColor.White
                     )
 
-                    item.rating?.takeIf { it > 0 }?.let { rating ->
-                        Spacer(modifier = Modifier.padding(AptoideSpacing.spacing2))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Default.Star,
-                                contentDescription = "Rating star",
-                                tint = Color.Yellow,
-                                modifier = Modifier.size(12.dp)
-                            )
-                            Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
-                            BodySmallText(text = rating.toString(), color = AptoideColor.White)
-                        }
+                    Spacer(modifier = Modifier.padding(AptoideSpacing.spacing2))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "Rating star",
+                            tint = Color.Yellow,
+                            modifier = Modifier.size(12.dp)
+                        )
+                        Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
+                        BodySmallText(text = item.formattedRating, color = AptoideColor.White)
                     }
                 }
             }
@@ -237,7 +235,7 @@ private fun LocalTopAppsCarousel(apps: List<App>, onAppClick: (app: App) -> Unit
                             modifier = Modifier.size(14.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        BodySmallText(text = app.rating?.toString() ?: "--")
+                        BodySmallText(text = app.formattedRating)
                     }
                 }
             }
@@ -294,18 +292,16 @@ private fun AppListItem(
                 color = AptoideColor.SecondaryTextGrey
             )
 
-            app.rating?.takeIf { it > 0 }?.let { rating ->
-                Spacer(modifier = Modifier.height(AptoideSpacing.spacing2))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = "Rating",
-                        tint = AptoideColor.BackgroundGrey,
-                        modifier = Modifier.size(14.dp)
-                    )
-                    Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
-                    BodySmallText(text = rating.toString())
-                }
+            Spacer(modifier = Modifier.height(AptoideSpacing.spacing2))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "Rating",
+                    tint = AptoideColor.BackgroundGrey,
+                    modifier = Modifier.size(14.dp)
+                )
+                Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
+                BodySmallText(text = app.formattedRating)
             }
         }
 
