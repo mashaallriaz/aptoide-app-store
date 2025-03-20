@@ -139,7 +139,7 @@ fun AppDetailsBody(modifier: Modifier, app: App?, onDownloadClick: () -> Unit) {
                 Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
                 AppStatsRow(iconRes = R.drawable.ic_star, text = app?.formattedRating.toString())
             }
-            LatestVersionSection(version = app?.verCode.toString())
+            LatestVersionSection(version = app?.verName.toString())
             DescriptionSection(modifier = Modifier.fillMaxWidth())
         }
 

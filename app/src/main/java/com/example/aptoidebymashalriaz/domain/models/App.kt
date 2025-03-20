@@ -10,7 +10,7 @@ data class App(
     val id: Long,
     val name: String?,
     val storeName: String?,
-    val verCode: Int?,
+    val verName: String?,
     val size: Long?,
     val downloads: Int?,
     val rating: Double?,
