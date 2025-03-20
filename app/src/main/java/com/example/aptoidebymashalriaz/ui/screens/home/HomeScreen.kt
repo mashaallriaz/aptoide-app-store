@@ -52,6 +52,7 @@ import com.example.aptoidebymashalriaz.ui.theme.BodyMediumText
 import com.example.aptoidebymashalriaz.ui.theme.BodySmallText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineLargeText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineMediumText
+import com.example.aptoidebymashalriaz.ui.utils.getFormattedRating
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), onAppClick: (app: App) -> Unit) {
@@ -158,7 +159,10 @@ private fun HomeBannerCarousel(bannerApps: List<App>, onAppClick: (app: App) -> 
                             modifier = Modifier.size(12.dp)
                         )
                         Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
-                        BodySmallText(text = item.formattedRating, color = AptoideColor.White)
+                        BodySmallText(
+                            text = item.rating.getFormattedRating(),
+                            color = AptoideColor.White
+                        )
                     }
                 }
             }
@@ -235,7 +239,7 @@ private fun LocalTopAppsCarousel(apps: List<App>, onAppClick: (app: App) -> Unit
                             modifier = Modifier.size(14.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        BodySmallText(text = app.formattedRating)
+                        BodySmallText(text = app.rating.getFormattedRating())
                     }
                 }
             }
@@ -301,7 +305,7 @@ private fun AppListItem(
                     modifier = Modifier.size(14.dp)
                 )
                 Spacer(modifier = Modifier.width(AptoideSpacing.spacing4))
-                BodySmallText(text = app.formattedRating)
+                BodySmallText(text = app.rating.getFormattedRating())
             }
         }
 

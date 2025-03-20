@@ -45,6 +45,9 @@ import com.example.aptoidebymashalriaz.ui.theme.BodySmallText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineLargeText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineMediumText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineSmallText
+import com.example.aptoidebymashalriaz.ui.utils.getFormattedDownloads
+import com.example.aptoidebymashalriaz.ui.utils.getFormattedRating
+import com.example.aptoidebymashalriaz.ui.utils.getFormattedSize
 
 @Composable
 fun AppDetailScreen(viewModel: AppDetailViewModel = hiltViewModel(), onBackClick: () -> Unit) {
@@ -132,12 +135,12 @@ fun AppDetailsBody(modifier: Modifier, app: App?, onDownloadClick: () -> Unit) {
             ) {
                 AppStatsRow(
                     iconRes = R.drawable.ic_download,
-                    text = app?.formattedDownloads.toString()
+                    text = app?.downloads.getFormattedDownloads()
                 )
                 Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
-                AppStatsRow(iconRes = R.drawable.ic_app_size, text = app?.formattedSize.toString())
+                AppStatsRow(iconRes = R.drawable.ic_app_size, text = app?.size.getFormattedSize())
                 Spacer(modifier = Modifier.width(AptoideSpacing.spacing24))
-                AppStatsRow(iconRes = R.drawable.ic_star, text = app?.formattedRating.toString())
+                AppStatsRow(iconRes = R.drawable.ic_star, text = app?.rating.getFormattedRating())
             }
             LatestVersionSection(version = app?.verName.toString())
             DescriptionSection(modifier = Modifier.fillMaxWidth())
