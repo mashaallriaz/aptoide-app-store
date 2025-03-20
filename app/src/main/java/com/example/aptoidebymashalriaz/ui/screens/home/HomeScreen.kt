@@ -221,7 +221,8 @@ private fun LocalTopAppsCarousel(apps: List<App>, onAppClick: (app: App) -> Unit
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f)
-                            .padding(AptoideSpacing.spacing8),
+                            .padding(AptoideSpacing.spacing8)
+                            .clip(RoundedCornerShape(8.dp)),
                         contentScale = ContentScale.Crop
                     )
 
@@ -259,7 +260,7 @@ private fun AppListHeader() {
         Icon(
             painter = painterResource(R.drawable.ic_app_list),
             contentDescription = null,
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier.size(20.dp),
             tint = AptoideColor.MainGrey
         )
         Spacer(modifier = Modifier.width(AptoideSpacing.spacing8))
