@@ -219,16 +219,15 @@ private fun LocalTopAppsCarousel(apps: List<App>, onAppClick: (app: App) -> Unit
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp)),
+                            .padding(AptoideSpacing.spacing8),
                         contentScale = ContentScale.Crop
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    BodyMediumText(text = app.name.orEmpty(), maxLines = 2)
+                    BodyMediumText(text = app.name.orEmpty(), maxLines = 1)
 
                     Spacer(modifier = Modifier.height(4.dp))
-
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(

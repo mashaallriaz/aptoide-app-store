@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -100,11 +99,7 @@ private fun AppDetailsHeader(app: App?) {
             model = app?.icon,
             contentDescription = "${app?.name} icon",
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(12.dp))
-                .background(Color.White.copy(alpha = 0.3f))
-                .padding(AptoideSpacing.spacing4)
+            modifier = Modifier.size(100.dp)
         )
 
         Spacer(modifier = Modifier.height(AptoideSpacing.spacing12))
