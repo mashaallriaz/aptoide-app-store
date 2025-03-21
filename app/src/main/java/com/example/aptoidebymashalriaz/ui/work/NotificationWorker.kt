@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.work.HiltWorker
@@ -13,6 +14,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.aptoidebymashalriaz.R
 import com.example.aptoidebymashalriaz.ui.MainActivity
+import com.example.aptoidebymashalriaz.ui.theme.AptoideColor
 import com.example.aptoidebymashalriaz.ui.utils.hasNotificationsPermission
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -46,6 +48,8 @@ class NotificationWorker @AssistedInject constructor(
             .setSmallIcon(R.drawable.ic_app_logo)
             .setContentTitle(context.getString(R.string.notification_title))
             .setContentText(context.getString(R.string.notification_text))
+            .setColor(AptoideColor.AptoidePrimary.toArgb())
+            .setColorized(true)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .build()
