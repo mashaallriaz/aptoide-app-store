@@ -1,8 +1,10 @@
 package com.example.aptoidebymashalriaz.domain.interactors
 
 import com.example.aptoidebymashalriaz.domain.models.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * A reusable resource interactor that handles the common pattern of:
@@ -34,7 +36,7 @@ abstract class FlowResourceInteractor<in P, T> {
         } catch (e: Exception) {
             emit(Result.Error(message = e.localizedMessage ?: "Unknown error"))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     protected abstract suspend fun doWork(params: P): T
     protected open suspend fun getCachedData(params: P): T? = null
