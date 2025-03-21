@@ -34,13 +34,15 @@ internal fun BaseText(
 fun HeadlineLargeText(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = Color.Unspecified
+    color: Color = Color.Unspecified,
+    textAlign: TextAlign = TextAlign.Unspecified
 ) {
     BaseText(
         text = text,
         style = Typography.headlineLarge,
         modifier = modifier,
-        color = color
+        color = color,
+        textAlign = textAlign
     )
 }
 
@@ -49,12 +51,14 @@ fun HeadlineMediumText(
     modifier: Modifier = Modifier,
     text: String,
     color: Color = Color.Unspecified,
+    textAlign: TextAlign = TextAlign.Unspecified
 ) {
     BaseText(
         text = text,
         style = Typography.headlineMedium,
         modifier = modifier,
-        color = color
+        color = color,
+        textAlign = textAlign
     )
 }
 

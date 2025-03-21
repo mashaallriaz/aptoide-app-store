@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -108,9 +109,17 @@ private fun AppDetailsHeader(app: App?) {
         )
 
         Spacer(modifier = Modifier.height(AptoideSpacing.spacing12))
-        HeadlineLargeText(text = app?.name.orEmpty(), color = AptoideColor.White)
+        HeadlineLargeText(
+            text = app?.name.orEmpty(),
+            color = AptoideColor.White,
+            textAlign = TextAlign.Center
+        )
         Spacer(modifier = Modifier.height(AptoideSpacing.spacing4))
-        HeadlineMediumText(text = app?.storeName.orEmpty(), color = AptoideColor.White)
+        HeadlineMediumText(
+            text = app?.storeName.orEmpty(),
+            color = AptoideColor.White,
+            textAlign = TextAlign.Center
+        )
         Spacer(modifier = Modifier.height(AptoideSpacing.spacing12))
     }
 }
