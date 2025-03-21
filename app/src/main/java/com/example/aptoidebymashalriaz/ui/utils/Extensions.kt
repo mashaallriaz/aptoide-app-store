@@ -1,5 +1,10 @@
 package com.example.aptoidebymashalriaz.ui.utils
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.content.ContextCompat
 import java.util.Locale
 
 /**
@@ -51,4 +56,14 @@ fun Long?.getFormattedSize(): String {
         "${value.toInt()} ${units[index]}"
     else
         String.format(Locale.getDefault(), "%.1f %s", value, units[index])
+}
+
+fun Context.hasNotificationsPermission(): Boolean {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+    } else {
+        true
+    }
 }

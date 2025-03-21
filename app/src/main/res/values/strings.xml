@@ -12,4 +12,10 @@
     <string name="download_unavailable_alert_title">Download Unavailable</string>
     <string name="download_unavailable_alert_message">The app is not available for download in demo mode.</string>
     <string name="download_unavailable_alert_button_label">Dismiss</string>
+
+    <string name="notification_title">New apps available</string>
+    <string name="notification_text">Check out the latest apps in Aptoide!</string>
+
+    <string name="notification_channel_name_new_apps">New Apps Available</string>
+    <string name="notification_channel_description_new_apps">Receive a notification every 30 minutes when new apps are available on Aptoide.</string>
 </resources>

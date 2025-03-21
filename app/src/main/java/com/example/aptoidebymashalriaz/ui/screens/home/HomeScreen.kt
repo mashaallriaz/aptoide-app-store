@@ -32,7 +32,9 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +50,7 @@ import coil.request.ImageRequest
 import com.example.aptoidebymashalriaz.R
 import com.example.aptoidebymashalriaz.domain.models.App
 import com.example.aptoidebymashalriaz.ui.components.OutlinedSmallButton
+import com.example.aptoidebymashalriaz.ui.components.RequestNotificationPermission
 import com.example.aptoidebymashalriaz.ui.components.TopAppBarWithLogo
 import com.example.aptoidebymashalriaz.ui.theme.AptoideColor
 import com.example.aptoidebymashalriaz.ui.theme.AptoideSpacing
@@ -56,6 +59,7 @@ import com.example.aptoidebymashalriaz.ui.theme.BodySmallText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineLargeText
 import com.example.aptoidebymashalriaz.ui.theme.HeadlineMediumText
 import com.example.aptoidebymashalriaz.ui.utils.getFormattedRating
+import com.example.aptoidebymashalriaz.ui.utils.hasNotificationsPermission
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), onAppClick: (app: App) -> Unit) {
@@ -68,9 +72,18 @@ private fun HomeScreenImpl(
     state: HomeViewState,
     onAppClick: (app: App) -> Unit
 ) {
+    val context = LocalContext.current
     val allApps = state.apps
     val bannerApps = allApps.filter { it.graphic.isNullOrEmpty().not() }.take(5)
     val localTopCarouselApps = allApps.take(5)
+
+    var showNotificationsPermissionPrompt by remember {
+        mutableStateOf(context.hasNotificationsPermission().not())
+    }
+
+    if (showNotificationsPermissionPrompt) {
+        RequestNotificationPermission { showNotificationsPermissionPrompt = false }
+    }
 
     LazyColumn {
         item { TopAppBarWithLogo() }
