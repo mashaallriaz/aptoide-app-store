@@ -129,7 +129,7 @@ fun AppDetailsBody(modifier: Modifier, app: App?, onDownloadClick: () -> Unit) {
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
         ) {
-            Spacer(modifier = Modifier.height(AptoideSpacing.spacing16))
+            Spacer(modifier = Modifier.height(AptoideSpacing.spacing4))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
