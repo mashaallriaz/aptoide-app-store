@@ -17,15 +17,16 @@ fun Int?.getFormattedDownloads(): String {
     if (this < 1_000) return toString()
     val suffixes = arrayOf("K", "M", "B", "T")
     var value = toDouble()
-    var index = 0
+    var index = -1
     while (value >= 1_000 && index < suffixes.lastIndex) {
         value /= 1_000
         index++
     }
-    return if (value % 1.0 == 0.0)
+    return if (value % 1.0 == 0.0) {
         "${value.toInt()}${suffixes[index]}"
-    else
+    } else {
         String.format(Locale.getDefault(), "%.1f%s", value, suffixes[index])
+    }
 }
 
 /**
@@ -47,7 +48,7 @@ fun Long?.getFormattedSize(): String {
     if (this < 1024) return "$this B"
     val units = arrayOf("KB", "MB", "GB", "TB")
     var value = toDouble()
-    var index = 0
+    var index = -1
     while (value >= 1024 && index < units.lastIndex) {
         value /= 1024
         index++
