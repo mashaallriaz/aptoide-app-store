@@ -63,7 +63,7 @@ private fun AppDetailScreenImpl(uiState: AppDetailViewState, onBackClick: () -> 
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painter = painterResource(R.drawable.bg_aptoide_gradient),
+                painter = painterResource(R.drawable.bg_aptoide_gradient_vertical),
                 contentScale = ContentScale.Crop
             )
     ) {
