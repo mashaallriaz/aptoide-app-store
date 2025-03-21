@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aptoidebymashalriaz.domain.interactors.GetAppById
 import com.example.aptoidebymashalriaz.domain.models.Result
-import com.example.aptoidebymashalriaz.ui.navigation.NavArgs.APP_ID
+import com.example.aptoidebymashalriaz.ui.navigation.RouteArgs.APP_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

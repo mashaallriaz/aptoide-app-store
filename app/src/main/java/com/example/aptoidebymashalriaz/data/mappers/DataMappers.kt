@@ -1,9 +1,16 @@
-package com.example.aptoidebymashalriaz.data
+package com.example.aptoidebymashalriaz.data.mappers
 
 import com.example.aptoidebymashalriaz.data.local.AppEntity
 import com.example.aptoidebymashalriaz.data.remote.AppResponse
 import com.example.aptoidebymashalriaz.domain.models.App
 
+/**
+ * A single place for converting between different representations of an App:
+ *  AppEntity (local database model)
+ *  AppResponse (remote API DTO)
+ *  App (domain model)
+ *  List converters for each mapping direction
+ */
 object DataMappers {
     fun AppEntity.toApp(): App {
         return App(

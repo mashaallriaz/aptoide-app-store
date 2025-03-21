@@ -1,4 +1,4 @@
-package com.example.aptoidebymashalriaz.data
+package com.example.aptoidebymashalriaz.data.di
 
 import android.content.Context
 import androidx.room.Room
@@ -8,7 +8,8 @@ import com.example.aptoidebymashalriaz.data.local.AptoideDao
 import com.example.aptoidebymashalriaz.data.local.AptoideDatabase
 import com.example.aptoidebymashalriaz.data.local.AptoideLocalDataSource
 import com.example.aptoidebymashalriaz.data.remote.AptoideService
-import com.example.aptoidebymashalriaz.domain.repositories.AptoideRepository
+import com.example.aptoidebymashalriaz.data.repository.AptoideRepositoryImpl
+import com.example.aptoidebymashalriaz.domain.repository.AptoideRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

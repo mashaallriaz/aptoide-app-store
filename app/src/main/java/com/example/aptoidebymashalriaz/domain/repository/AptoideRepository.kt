@@ -1,4 +1,4 @@
-package com.example.aptoidebymashalriaz.domain.repositories
+package com.example.aptoidebymashalriaz.domain.repository
 
 import com.example.aptoidebymashalriaz.domain.models.App
 

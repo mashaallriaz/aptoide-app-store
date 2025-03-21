@@ -1,6 +1,6 @@
 package com.example.aptoidebymashalriaz.ui.navigation
 
-import com.example.aptoidebymashalriaz.ui.navigation.NavArgs.APP_ID
+import com.example.aptoidebymashalriaz.ui.navigation.RouteArgs.APP_ID
 
 sealed class Screen(val route: String) {
     data object Home : Screen("home")

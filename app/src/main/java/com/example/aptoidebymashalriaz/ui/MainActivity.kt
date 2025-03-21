@@ -16,7 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.aptoidebymashalriaz.ui.navigation.NavArgs.APP_ID
+import com.example.aptoidebymashalriaz.ui.navigation.RouteArgs.APP_ID
 import com.example.aptoidebymashalriaz.ui.navigation.Screen
 import com.example.aptoidebymashalriaz.ui.screens.detail.AppDetailScreen
 import com.example.aptoidebymashalriaz.ui.screens.home.HomeScreen
