@@ -6,10 +6,10 @@ A simple Android client for browsing Aptoide apps featuring offline caching, per
 ## APK Download  
 [Download the latest debug APK here!](./apk/aptoide-demo.apk)
 
-## Screenshots
-| Home Screen | Detail Screen |  
-|-------------|---------------| 
-| ![Home](./screenshots/home.png)  | ![Detail](./screenshots/detail.png)  |   
+## Screenshots  
+| Home | Detail | Download Dialog | Notifications |  
+|------|--------|-----------------|---------------|  
+| ![Home](./screenshots/home.png) | ![Detail](./screenshots/detail.png) | ![Download Dialog](./screenshots/download.png) | ![Notifications](./screenshots/notification.png) |
 
 ## Features  
 - Fetch and display apps from the Aptoide API  
